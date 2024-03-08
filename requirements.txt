@@ -1,0 +1,9 @@
+transformers
+torch
+accelerate
+bitsandbytes
+langchain
+langchain-community
+fastapi
+nest-asyncio
+uvicorn
