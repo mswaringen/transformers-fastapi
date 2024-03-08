@@ -1,6 +1,6 @@
 # Transformers FastAPI
 
-`pip install git+https://github.com/mswaringen/transformers-fastapi`
+`git clone https://github.com/mswaringen/transformers-fastapi.git`
 
 `pip install -r requirements.txt`
 
