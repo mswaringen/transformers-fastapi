@@ -16,7 +16,7 @@ import argparse
 
 model_id = None
 
-def load_model_and_tokenizer(model_id):
+def load_model_and_tokenizer(model_id='mistralai/Mistral-7B-Instruct-v0.2'):
     # Define the quantization configuration for the model
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
