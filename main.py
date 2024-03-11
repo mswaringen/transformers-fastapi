@@ -11,12 +11,12 @@ from fastapi.responses import StreamingResponse
 import uvicorn
 import time
 import locale
-import argparse
+import os
 
 
 model_id = None
 
-def load_model_and_tokenizer(model_id='mistralai/Mistral-7B-Instruct-v0.2'):
+def load_model_and_tokenizer(model_id):
     # Define the quantization configuration for the model
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -54,7 +54,9 @@ def setup_text_generation_pipeline(model, tokenizer):
     return text_generation_pipeline, streamer
 
 
-def initialize_application(model_id):
+def initialize_application():
+    model_id = os.getenv('MODEL_ID', 'mistralai/Mistral-7B-Instruct-v0.2')  # Default model ID if not set in env
+    print("Model selected: ", model_id)
     locale.getpreferredencoding = lambda: "UTF-8"
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -155,17 +157,18 @@ def initialize_application(model_id):
 
     return app
 
+app = initialize_application()
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', required=True)
-    args = parser.parse_args()
-    print("Model selected: ", args.model)
-    model_id = args.model
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('-m', '--model', required=True)
+#     args = parser.parse_args()
+#     print("Model selected: ", args.model)
+#     model_id='mistralai/Mistral-7B-Instruct-v0.2'
 
-    app = initialize_application(model_id)
+#     app = initialize_application(model_id)
     # Run server
-    uvicorn.run(app)
+    # uvicorn.run(app)
     # python main.py --model mistralai/Mistral-7B-Instruct-v0.2
 
 
