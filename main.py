@@ -14,7 +14,10 @@ import locale
 import os
 
 
-model_id = None
+# Variables for time measurements
+start_time = 0
+first_token_time = 0
+token_times = []
 
 def load_model_and_tokenizer(model_id):
     # Define the quantization configuration for the model
@@ -94,10 +97,7 @@ def initialize_application():
     # Your additional setup code here (e.g., FastAPI app initialization)
     app = FastAPI()
 
-    # Variables for time measurements
-    start_time = 0
-    first_token_time = 0
-    token_times = []
+    
 
     # Invoke the LLM chain using the input text
     def invoke_llm_chain(input_text):
